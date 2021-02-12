@@ -13,3 +13,12 @@ challenge.iml
 .idea/encodings.xml
 .idea/compiler.xml
 .idea/.name
+target/classes/de/exxcellent/challenge/App.class
+target/classes/de/exxcellent/challenge/football.csv
+target/classes/de/exxcellent/challenge/weather.csv
+target/classes/de/kohr/CSVDataStream.class
+target/classes/de/kohr/DataAnalyzer.class
+target/classes/de/kohr/DataStream.class
+target/classes/de/kohr/DataStreamFactory.class
+target/test-classes/de/exxcellent/challenge/AppTest.class
+target/test-classes/de/kohr/CSVDataStreamTest.class
