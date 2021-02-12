@@ -2,6 +2,7 @@ package de.kohr;
 
 import java.util.AbstractMap;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Optional;
 
 public class DataAnalyzer {
@@ -10,7 +11,7 @@ public class DataAnalyzer {
         data = DataStreamFactory.getStream(src);
     }
 
-    public String getSmallestDistance(String maxColumnName, String minColumnName, String targetColumn){
+    public String getSmallestDistance(String maxColumnName, String minColumnName, String targetColumn, boolean useAbsolute){
         String[] order = data.getOrder();
         int maxColumnIndex = -1, minColumnIndex = -1, targetColumnIndex = -1;
 
@@ -33,11 +34,14 @@ public class DataAnalyzer {
         int finalMinColumnIndex = minColumnIndex;
 
         Optional<String> optionalAnswer = data.getData().map(
-                (line) -> {return new AbstractMap.SimpleImmutableEntry<String,Integer>(
-                        line[finalTargetColumnIndex],
-                        Integer.parseInt(line[finalMaxColumnIndex])-Integer.parseInt(line[finalMinColumnIndex]));}
+                (line) -> {
+                    int dif = Integer.parseInt(line[finalMaxColumnIndex])-Integer.parseInt(line[finalMinColumnIndex]);
+                    if (useAbsolute) dif = Math.abs(dif);
+                    return new AbstractMap.SimpleImmutableEntry<String,Integer>(
+                        line[finalTargetColumnIndex], dif
+                        );}
                 )
-                .min((lhs, rhs)->lhs.getValue().compareTo(rhs.getValue()))
+                .min(Comparator.comparing(AbstractMap.SimpleImmutableEntry::getValue))
                 .map(line -> line.getKey());
 
         if (optionalAnswer.isPresent()) answer = optionalAnswer.get();
