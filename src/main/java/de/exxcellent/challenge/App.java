@@ -1,6 +1,7 @@
 package de.exxcellent.challenge;
 
 import de.kohr.DataAnalyzer;
+import de.kohr.SourceFormatNotSupported;
 
 import java.io.IOException;
 
@@ -36,6 +37,8 @@ public final class App {
             System.out.println("Not enough arguments given!");
         } catch (IOException io) {
             System.out.println("Could not find or access given path!");
+        } catch (SourceFormatNotSupported io) {
+            System.out.println("The given source is not supported!");
         } catch (Exception e){
             e.printStackTrace();
         }

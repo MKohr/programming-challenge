@@ -8,7 +8,14 @@ public class CSVDataStream implements DataStream {
     private Stream<String> data;
     private String[] order;
 
-    CSVDataStream(String csvSource) throws java.io.FileNotFoundException, java.io.IOException{
+
+    /**
+     * Does not Check for validity of .csv.
+     *
+     * @param csvSource Relative or direct path to a CSV file, does not check for correctness of csv format
+     * @throws java.io.IOException
+     */
+    CSVDataStream(String csvSource) throws java.io.IOException{
         BufferedReader csvReader = new BufferedReader(new FileReader(csvSource));
         order = csvReader.readLine().split(",");
         data = csvReader.lines();

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DataStreamFactoryTest {
@@ -19,5 +20,16 @@ public class DataStreamFactoryTest {
         }
     }
 
+    @Test
+    void NotSupportedErrorTest(){
+        try {
+            assertThrows(
+                    SourceFormatNotSupported.class,
+                    () ->DataStreamFactory.getStream("notExistend.someFile")
+            );
+        } catch (Exception e){
+            assertTrue(false);
+        }
+    }
 
 }

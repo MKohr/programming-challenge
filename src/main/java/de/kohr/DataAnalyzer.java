@@ -7,10 +7,20 @@ import java.util.Optional;
 
 public class DataAnalyzer {
     private DataStream data;
+
     public DataAnalyzer(String src) throws Exception {
         data = DataStreamFactory.getStream(src);
     }
 
+    /**
+     * Returns the Name of the entry with the minimal difference
+     *
+     * @param maxColumnName Name of the minuend, only Integer column, note @useAbsolute
+     * @param minColumnName Name of the subtrahend, Integer column, note @useAbsolute
+     * @param targetColumn Name of the Value to output, as String
+     * @param useAbsolute wether to use absolute of difference, makes @maxColumnName and @minColumnName interchangeable
+     * @return The Value defined by targetColumn of the smallest distance between maxColumnName and minColumnName
+     */
     public String getSmallestDistance(String maxColumnName, String minColumnName, String targetColumn, boolean useAbsolute){
         String[] order = data.getOrder();
         int maxColumnIndex = -1, minColumnIndex = -1, targetColumnIndex = -1;
@@ -21,6 +31,7 @@ public class DataAnalyzer {
             if (order[i].equals(targetColumn)) targetColumnIndex = i;
         }
 
+        //check for data sanity
         if (maxColumnIndex == -1 || minColumnIndex == -1 || targetColumnIndex == -1){
             throw new IndexOutOfBoundsException("Could not match given Names to Table: "
             + (maxColumnIndex == -1 ? maxColumnName : "")
@@ -29,6 +40,7 @@ public class DataAnalyzer {
         }
 
         String answer = "Could Not find minimum";
+        //make variables quasi final for lambda
         int finalTargetColumnIndex = targetColumnIndex;
         int finalMaxColumnIndex = maxColumnIndex;
         int finalMinColumnIndex = minColumnIndex;
@@ -44,6 +56,7 @@ public class DataAnalyzer {
                 .min(Comparator.comparing(AbstractMap.SimpleImmutableEntry::getValue))
                 .map(line -> line.getKey());
 
+        //check for answer
         if (optionalAnswer.isPresent()) answer = optionalAnswer.get();
         return answer;
     }
