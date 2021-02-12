@@ -22,3 +22,6 @@ target/classes/de/kohr/DataStream.class
 target/classes/de/kohr/DataStreamFactory.class
 target/test-classes/de/exxcellent/challenge/AppTest.class
 target/test-classes/de/kohr/CSVDataStreamTest.class
+target/test-classes/de/kohr/DataStreamFactoryTest.class
+target/test-classes/de/kohr/DataAnalyzerTest.class
+target/classes/de/exxcellent/challenge/.~lock.weather.csv#
